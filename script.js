@@ -1,4 +1,6 @@
-var allPhotos = [];
+var allPictures = [];
+
+//****** Picture constructor and objects
 
 function Picture (name, title, tenure, path) {
   this.name = name;
@@ -6,31 +8,7 @@ function Picture (name, title, tenure, path) {
   this.tenure = tenure;
   this.path = path;
   this.votes = 0;
-  allPhotos.push(this);
-}
-
-function Tracker () {}
-
-//Tracker.prototype.
-
-function picSelect () {
-  return Math.floor(Math.random() * allPhotos.length);
-};
-
-//Tracker.prototype.
-
-function display (picSelect) {
-  var choice1 = document.getElementById('choice1');
-  var pic1 = document.getElementById('pic1');
-  var name1 = document.getElementById('name1');
-  var title1 = document.getElementById('title1');
-  var tenure1 = document.getElementById('tenure1');
-  var currentPic = allPhotos[picSelect()];
-
-  pic1.src = 'images/' + currentPic.path;
-  name1.textContent = currentPic.name;
-  title1.textContent = currentPic.title + ' Justice';
-  tenure1.textContent = currentPic.tenure;
+  allPictures.push(this);
 }
 
 var roberts = new Picture('John Roberts', 'Chief', '2005 - present', 'roberts.jpg');
@@ -49,4 +27,42 @@ var chase = new Picture('Salmon P. Chase', 'Chief', '1864 - 1873', 'chase.jpg');
 var black = new Picture('Hugo Black', 'Associate', '1937 - 1971', 'black.jpg');
 var tmarshall = new Picture('Thurgood Marshall', 'Associate', '1967 - 1991', 'tmarshall.jpg');
 
-display(picSelect);
+
+function Tracker () {}
+
+var currentNums = [];
+
+function picSelect () {
+  for (var j = 0; j < 2; j++) {
+    var num = Math.floor(Math.random() * allPictures.length);
+    currentNums.push(num);
+  }
+
+  if (currentNums[0] === currentNums[1]) {
+    currentNums = [];
+    picSelect();
+  } else {
+    return currentNums;
+  }
+}
+
+function displayChoices () {
+  picSelect();
+
+  for (var i = 0; i < 2; i++) {
+    var choice = document.getElementById('choice' + i);
+    var pic = document.getElementById('pic' + i);
+    var name = document.getElementById('name' + i);
+    var title = document.getElementById('title' + i);
+    var tenure = document.getElementById('tenure' + i);
+    var currentPic = allPictures[currentNums[i]];
+
+    pic.src = 'images/' + currentPic.path;
+    name.textContent = currentPic.name;
+    title.textContent = currentPic.title + ' Justice';
+    tenure.textContent = currentPic.tenure;
+  }
+
+}
+
+displayChoices();
