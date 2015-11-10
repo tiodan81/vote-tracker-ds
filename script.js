@@ -28,57 +28,56 @@ var black = new Picture('Hugo Black', 'Associate', '1937 - 1971', 'black.jpg');
 var tmarshall = new Picture('Thurgood Marshall', 'Associate', '1967 - 1991', 'tmarshall.jpg');
 
 
-function Tracker () {}
+var Tracker = {
+  currentNums: [],
+  pic0: document.getElementById('pic0'),
+  pic1: document.getElementById('pic1'),
 
-var currentNums = [];
+  picSelect: function () {
+    for (var j = 0; j < 2; j++) {
+      var num = Math.floor(Math.random() * allPictures.length);
+      this.currentNums.push(num);
+    }
 
-function picSelect () {
-  for (var j = 0; j < 2; j++) {
-    var num = Math.floor(Math.random() * allPictures.length);
-    currentNums.push(num);
+    if (this.currentNums[0] === this.currentNums[1]) {
+      this.currentNums = [];
+      this.picSelect();
+    } else {
+      return this.currentNums;
+    }
+  },
+
+  displayChoices: function () {
+    this.picSelect();
+
+    for (var i = 0; i < 2; i++) {
+      var pic = document.getElementById('pic' + i);
+      var name = document.getElementById('name' + i);
+      var title = document.getElementById('title' + i);
+      var tenure = document.getElementById('tenure' + i);
+      var currentPic = allPictures[this.currentNums[i]];
+
+      pic.src = 'images/' + currentPic.path;
+      name.textContent = currentPic.name;
+      title.textContent = currentPic.title + ' Justice';
+      tenure.textContent = currentPic.tenure;
+    }
+  },
+
+  vote: function (index) {
+    allPictures[index].votes++;
+    //give info
+    //update chart
+    this.currentNums = [];
+    this.displayChoices();
   }
+};
 
-  if (currentNums[0] === currentNums[1]) {
-    currentNums = [];
-    picSelect();
-  } else {
-    return currentNums;
-  }
-}
+Tracker.pic0.addEventListener('click', function() {
+  Tracker.vote(Tracker.currentNums[0]);
+});
+Tracker.pic1.addEventListener('click', function() {
+  Tracker.vote(Tracker.currentNums[1]);
+});
 
-function displayChoices () {
-  picSelect()
-
-  for (var i = 0; i < 2; i++) {
-    var pic = document.getElementById('pic' + i);
-    var name = document.getElementById('name' + i);
-    var title = document.getElementById('title' + i);
-    var tenure = document.getElementById('tenure' + i);
-    var currentPic = allPictures[currentNums[i]];
-
-    pic.src = 'images/' + currentPic.path;
-    name.textContent = currentPic.name;
-    title.textContent = currentPic.title + ' Justice';
-    tenure.textContent = currentPic.tenure;
-  }
-
-}
-
-displayChoices();
-
-var pic0 = document.getElementById('pic0');
-var pic1 = document.getElementById('pic1');
-
-pic0.addEventListener('click', vote);
-pic1.addEventListener('click', vote);
-
-function vote (event) {
-  //need reference to currently displayed objects - currentNums
-  var chosen = event; //allPictures[currentNums];
-  console.log(chosen);
-  //give info
-  //increment vote
-
-  //update chart
-  //next vote
-}
+Tracker.displayChoices();
