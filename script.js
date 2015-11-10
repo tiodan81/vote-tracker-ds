@@ -74,7 +74,8 @@ pic1.addEventListener('click', vote);
 
 function vote (event) {
   //need reference to currently displayed objects - currentNums
-  var chosen = allPictures[]
+  var chosen = event; //allPictures[currentNums];
+  console.log(chosen);
   //give info
   //increment vote
 
