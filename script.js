@@ -47,10 +47,9 @@ function picSelect () {
 }
 
 function displayChoices () {
-  picSelect();
+  picSelect()
 
   for (var i = 0; i < 2; i++) {
-    var choice = document.getElementById('choice' + i);
     var pic = document.getElementById('pic' + i);
     var name = document.getElementById('name' + i);
     var title = document.getElementById('title' + i);
@@ -66,3 +65,19 @@ function displayChoices () {
 }
 
 displayChoices();
+
+var pic0 = document.getElementById('pic0');
+var pic1 = document.getElementById('pic1');
+
+pic0.addEventListener('click', vote);
+pic1.addEventListener('click', vote);
+
+function vote (event) {
+  //need reference to currently displayed objects - currentNums
+  var chosen = allPictures[]
+  //give info
+  //increment vote
+
+  //update chart
+  //next vote
+}
