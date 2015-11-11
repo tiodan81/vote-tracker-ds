@@ -4,6 +4,8 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  font-family: 'Playfair Display SC', serif;
+  font-weight: 700;
 }
 
 header {
@@ -11,6 +13,10 @@ header {
   margin-top: 20px;
   margin-bottom: 30px;
 }
+
+/*p {
+  font-size: 1.2em;
+}*/
 
 #choices {
   display: flex;
