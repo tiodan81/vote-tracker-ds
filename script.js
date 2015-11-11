@@ -64,14 +64,42 @@ var Tracker = {
     }
   },
 
+  displayChart: function () {
+    var canvas = document.getElementById('canvas').getContext('2d');
+    var labelsArray = [];
+    var dataArray =[];
+
+    for (var i = 0; i < allPictures.length; i++) {
+      labelsArray[i] = allPictures[i].name;
+      dataArray[i] = allPictures[i].votes;
+    }
+
+    var chartData = {
+      labels: labelsArray,
+      datasets: [{
+        label: 'Justices',
+        fillcolor: 'rgba(73,188,170,0.4)',
+        strokeColor: 'rgba(72,174,209,0.4)',
+        highlightFill: "rgba(220, 220, 220, 0.75)",
+        highlightStroke: "rgba(220, 220, 220, 1.0)",
+        data: dataArray
+      }]
+    };
+
+    new Chart(canvas).Bar(chartData);
+  },
+
   vote: function (index) {
+    var response = document.getElementById('response');
+    response.textContent = 'Good call! You chose ' + allPictures[index].name;
     allPictures[index].votes++;
-    //give info
-    //update chart
     this.currentNums = [];
     this.displayChoices();
+    this.displayChart();
   }
 };
+
+
 
 Tracker.pic0.addEventListener('click', function() {
   Tracker.vote(Tracker.currentNums[0]);
@@ -81,3 +109,4 @@ Tracker.pic1.addEventListener('click', function() {
 });
 
 Tracker.displayChoices();
+Tracker.displayChart();

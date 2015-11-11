@@ -1,14 +1,37 @@
-/*body {
+body {
   background: url('images/court.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  -webkit-filter: opacity(.2);
-  filter: opacity(.2);
-}*/
+}
+
+header {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
 
 #choices {
   display: flex;
   justify-content: space-around;
+  text-align: center;
 }
+
+#pic0, #pic1 {
+  height: 200px;
+  width: 200px;
+}
+
+#chart {
+  display: flex;
+  justify-content: center;
+}
+
+canvas {
+  /*margin: 0 auto;*/
+  background-color: white;
+  /*padding: 15px;*/
+  border-radius: 5px;
+}
+
