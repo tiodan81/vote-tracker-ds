@@ -14,10 +14,6 @@ header {
   margin-bottom: 30px;
 }
 
-/*p {
-  font-size: 1.2em;
-}*/
-
 #choices {
   display: flex;
   justify-content: space-around;
