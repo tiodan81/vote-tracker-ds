@@ -132,7 +132,7 @@ var listener1 = function() {
 Tracker.pic0.addEventListener('click', listener0);
 Tracker.pic1.addEventListener('click', listener1);
 
-Tracker.response.addEventListener('click', function () {
+Tracker.response.addEventListener('click', function() {
   Tracker.currentNums = [];
   loserImg.style.transition = 'opacity 0s';
   loserImg.style.opacity = '1.0';
@@ -142,7 +142,7 @@ Tracker.response.addEventListener('click', function () {
 });
 
 var reset = document.getElementById('reset');
-reset.addEventListener('click', function () {
+reset.addEventListener('click', function() {
   localStorage.clear();
   for (var i in allPictures) {
     allPictures[i].votes = 0;
