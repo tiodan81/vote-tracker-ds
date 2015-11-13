@@ -54,7 +54,17 @@ button {
 }
 
 #wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: white;
   padding: 10px;
   border-radius: 5px;
+}
+
+#reset {
+  width: 160px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #C62828;
 }

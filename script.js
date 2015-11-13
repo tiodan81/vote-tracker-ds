@@ -141,4 +141,15 @@ Tracker.response.addEventListener('click', function () {
   Tracker.pic1.addEventListener('click', listener1);
 });
 
+var reset = document.getElementById('reset');
+reset.addEventListener('click', function () {
+  localStorage.clear();
+  for (var i in allPictures) {
+    allPictures[i].votes = 0;
+    chartData.datasets[0].data[i] = 0;
+    chart.datasets[0].bars[i].value = 0;
+    chart.update();
+  }
+});
+
 Tracker.displayChoices();
