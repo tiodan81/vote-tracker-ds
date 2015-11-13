@@ -1,6 +1,15 @@
 var allPictures = [];
-
-//****** Picture constructor and objects
+var chartData = {
+  labels: [],
+  datasets: [{
+    label: 'Justices',
+    fillcolor: 'rgba(21,101,192,1.0)',
+    strokeColor: 'rgba(21,101,192,1.0)',
+    highlightFill: "rgba(21,101,192,1.0)",
+    highlightStroke: "rgba(21,101,192,1.0)",
+    data: []
+  }]
+};
 
 function Picture (name, title, tenure, path) {
   this.name = name;
@@ -9,6 +18,8 @@ function Picture (name, title, tenure, path) {
   this.path = path;
   this.votes = 0;
   allPictures.push(this);
+  chartData.labels.push(name);
+  chartData.datasets[0].data.push(0);
 }
 
 var roberts = new Picture('John Roberts', 'Chief', '2005 - present', 'roberts.jpg');
@@ -26,7 +37,6 @@ var washington = new Picture('Bushrod Washington', 'Associate', '1798 - 1829', '
 var chase = new Picture('Salmon P. Chase', 'Chief', '1864 - 1873', 'chase.jpg');
 var black = new Picture('Hugo Black', 'Associate', '1937 - 1971', 'black.jpg');
 var tmarshall = new Picture('Thurgood Marshall', 'Associate', '1967 - 1991', 'tmarshall.jpg');
-
 
 var Tracker = {
   currentNums: [],
@@ -66,31 +76,6 @@ var Tracker = {
     }
   },
 
-  displayChart: function () {
-    var canvas = document.getElementById('canvas').getContext('2d');
-    var labelsArray = [];
-    var dataArray =[];
-
-    for (var i = 0; i < allPictures.length; i++) {
-      labelsArray[i] = allPictures[i].name;
-      dataArray[i] = allPictures[i].votes;
-    }
-
-    var chartData = {
-      labels: labelsArray,
-      datasets: [{
-        label: 'Justices',
-        fillcolor: 'rgba(21,101,192,1.0)',
-        strokeColor: 'rgba(21,101,192,1.0)',
-        highlightFill: "rgba(21,101,192,1.0)",
-        highlightStroke: "rgba(21,101,192,1.0)",
-        data: dataArray
-      }]
-    };
-
-    new Chart(canvas).Bar(chartData, {scaleShowVerticalLines: false});
-  },
-
   vote: function (pic, index) {
     var target = event.target.id;
 
@@ -114,17 +99,35 @@ var Tracker = {
     }
 
     allPictures[index].votes += 1;
-    this.displayChart();
+    chartData.datasets[0].data[index] = allPictures[index].votes;
+    chart.datasets[0].bars[index].value = allPictures[index].votes;
+    chart.update();
+    localStorage.setItem('allPictures', JSON.stringify(allPictures));
   }
 };
 
+function init() {
+  if (localStorage.allPictures) {
+    allPictures = [];
+    allPictures = JSON.parse(localStorage.allPictures);
+    for (var i in allPictures) {
+      chartData.datasets[0].data[i] = allPictures[i].votes;
+    }
+  } else {
+    localStorage.setItem('allPictures', JSON.stringify(allPictures));
+  }
+} init();
+
+var canvas = document.getElementById('canvas').getContext('2d');
+var chart = new Chart(canvas).Bar(chartData, {scaleShowVerticalLines: false});
+
 var listener0 = function() {
   Tracker.vote(pic0, Tracker.currentNums[0]);
-}
+};
 
 var listener1 = function() {
   Tracker.vote(pic1, Tracker.currentNums[1]);
-}
+};
 
 Tracker.pic0.addEventListener('click', listener0);
 Tracker.pic1.addEventListener('click', listener1);
@@ -139,4 +142,3 @@ Tracker.response.addEventListener('click', function () {
 });
 
 Tracker.displayChoices();
-Tracker.displayChart();
